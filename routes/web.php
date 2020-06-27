@@ -57,5 +57,11 @@ Route::group([
         return view('admin.index');
     })->name('dashboard');
 
+    //Hotel Brands
+    Route::get('/brands','BrandController@index')->name('brands');
+    Route::get('/brand/add','BrandController@add')->name('brands.add');
+
+    Route::get('/hotels','HotelController@index')->name('hotels');
+    Route::get('/hotel/add','HotelController@add')->name('hotels.add');
 
 });
