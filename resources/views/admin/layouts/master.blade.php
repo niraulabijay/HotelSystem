@@ -12,6 +12,10 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{ asset('cork/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('cork/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('cork/plugins/sweetalerts/promise-polyfill.js') }}"></script>
+    <link href="{{ asset('cork/plugins/sweetalerts/sweetalert2.min.cssplugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('cork/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- END GLOBAL MANDATORY STYLES -->
 
     @stack('styles')
@@ -65,7 +69,7 @@
     <script src="{{ asset('cork/assets/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('cork/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('cork/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('cork/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('cork/assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -73,7 +77,13 @@
         });
     </script>
     <script src="{{ asset('cork/assets/js/custom.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="{{ asset('cork/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+    @include('admin.layouts.swal')
     <!-- END GLOBAL MANDATORY SCRIPTS -->
+    @stack('scripts')
 
 </body>
 </html>

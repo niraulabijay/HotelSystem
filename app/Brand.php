@@ -5,9 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class Brand extends Model
+class Brand extends Model implements HasMedia
 {
+    use HasMediaTrait;
     use Sluggable;
     use SoftDeletes;
     protected $fillable = ['title', 'slug', 'status', 'description'];
@@ -39,8 +43,16 @@ class Brand extends Model
         return $this->morphOne('App\Brand', 'iconable');
     }
 
-    public function featureImage()
+    public function logo()
     {
-        return $this->morphOne('App\Brand', 'imageable')->where('is_main', 1);
+        return $this->getFirstMedia('brand_logo');
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('logo-thumb')
+              ->width(250)
+              ->height(100)
+              ->sharpen(10);
     }
 }

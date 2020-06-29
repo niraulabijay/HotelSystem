@@ -59,7 +59,10 @@ Route::group([
 
     //Hotel Brands
     Route::get('/brands','BrandController@index')->name('brands');
-    Route::get('/brand/add','BrandController@add')->name('brands.add');
+    Route::post('/brand/add','BrandController@add')->name('brands.add');
+    Route::get('/brand/edit/{id}','BrandController@edit')->name('brands.edit');
+    Route::post('/brand/edit/{id}','BrandController@update')->name('brands.update');
+    Route::post('/brand/delete','BrandController@delete')->name('brands.delete');
 
     Route::get('/hotels','HotelController@index')->name('hotels');
     Route::get('/hotel/add','HotelController@add')->name('hotels.add');
