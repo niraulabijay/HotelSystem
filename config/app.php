@@ -178,6 +178,9 @@ return [
         //sentinel
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
+        //alert
+        Brian2694\Toastr\ToastrServiceProvider::class,
+
     ],
 
     /*
@@ -234,6 +237,9 @@ return [
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+
+        //alert
+        'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
 
     ],
 

@@ -6,6 +6,7 @@ use App\Model\Brand;
 use App\Http\Controllers\Controller;
 use App\tableList;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class BrandController extends Controller
 {
@@ -34,7 +35,8 @@ class BrandController extends Controller
                 ->toMediaCollection('brand_logo')
                 ->setCustomProperty('logo','1');
         }
-        return redirect()->back()->with('sweetAlert-success','New Brand Added Successfully');
+        Toastr::success('New Brand Added Successfully','Operation Success');
+        return redirect()->back();
     }
 
     public function edit($id){
@@ -63,9 +65,11 @@ class BrandController extends Controller
                     ->toMediaCollection('brand_logo');
             }
         }catch(\Exception $e){
-            return redirect()->back()->with('sweetAlert-error',$e->getMessage());
+            Toastr::error($e->getMessage(),'Server Error');
+            return redirect()->back();
         }
-        return redirect()->route('admin.brands')->with('sweetAlert-success','Brand Updated Successfully');
+        Toastr::success('Brand Updated Successfully','Operation success');
+        return redirect()->route('admin.brands');
     }
 
     public function delete(Request $request){
@@ -75,28 +79,24 @@ class BrandController extends Controller
         $brand = Brand::find($request->brand_id);
         try {
             if($brand->hotels->count() > 0){
-                $msg = 'This data already used in  : ' . $tables . ' Please remove those data first';
-                return redirect()->back()->with('sweetAlert-error', $msg);
-            }
-            if($brand->hasMedia('brand_logo')){
-                foreach($brand->getMedia('brand_logo') as $media){
-                    $delete = $brand->deleteMedia($media);
-                }
+                Toastr::error('This data already used in  : ' . $tables . ' Please remove those data first');
+                return redirect()->back();
             }
             $delete_query = $brand->delete();
             if ($delete_query) {
-                return redirect()->back()->with('sweetAlert-success', 'Brand has been deleted successfully');
+                Toastr::success('Brand has been deleted successfully','Operation Success');
+                return redirect()->back();
             } else {
-                return redirect()->back()->with('sweetAlert-error', 'Something went wrong, please try again');
+                Toastr::error('Something went wrong, please try again','Operation Failed');
             }
 
         } catch (\Illuminate\Database\QueryException $e) {
             // dd($e->getMessage());
-            $msg = 'This data already used in  : ' . $tables . ' Please remove those data first';
-            return redirect()->back()->with('sweetAlert-error', $msg);
+            Toastr::error('This data already used in  : ' . $tables . ' Please remove those data first','Operation Failed');
+            return redirect()->back();
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            return redirect()->back()->with('sweetAlert-error', 'Something went wrong, please try again');
+            Toastr::error($e->getMessage(),'Server Error');
+            return redirect()->back();
         }
 
     }
