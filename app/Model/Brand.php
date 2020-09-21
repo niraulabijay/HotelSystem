@@ -1,10 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -13,7 +12,6 @@ class Brand extends Model implements HasMedia
 {
     use HasMediaTrait;
     use Sluggable;
-    use SoftDeletes;
     protected $fillable = ['title', 'slug', 'status', 'description'];
 
     public function sluggable()
@@ -32,6 +30,7 @@ class Brand extends Model implements HasMedia
         return $this->hasMany(BrandSetting::class, 'brand_id', 'id');
 
     }
+
     public function hotels(){
 
         return $this->hasMany(Hotel::class, 'brand_id', 'id');
@@ -43,16 +42,26 @@ class Brand extends Model implements HasMedia
         return $this->morphOne('App\Brand', 'iconable');
     }
 
+    //Mediacollection to hold only one file
+    public function registerMediaCollections()
+    {
+        $this
+            ->addMediaCollection('brand_logo')
+            ->singleFile();
+    }
+
+    //return brand logo
     public function logo()
     {
         return $this->getFirstMedia('brand_logo');
     }
 
+    //Register Media conversion
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('logo-thumb')
-              ->width(250)
-              ->height(100)
+              ->width(350)
+              ->height(200)
               ->sharpen(10);
     }
 }

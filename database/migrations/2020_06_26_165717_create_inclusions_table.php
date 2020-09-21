@@ -20,7 +20,6 @@ class CreateInclusionsTable extends Migration
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->longText('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

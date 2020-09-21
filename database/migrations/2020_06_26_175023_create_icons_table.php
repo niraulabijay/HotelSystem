@@ -18,7 +18,6 @@ class CreateIconsTable extends Migration
             $table->text('icon')->nullable();
             $table->string('title')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

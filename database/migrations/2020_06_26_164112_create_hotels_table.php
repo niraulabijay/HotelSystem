@@ -21,7 +21,6 @@ class CreateHotelsTable extends Migration
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->longText('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('restrict');
         });

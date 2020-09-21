@@ -1,15 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class Hotel extends Model
+class Hotel extends Model implements HasMedia
 {
+    use HasMediaTrait;
     use Sluggable;
-    use SoftDeletes;
 
     protected $fillable = ['title', 'slug', 'brand_id', 'status', 'description'];
 
@@ -48,15 +50,26 @@ class Hotel extends Model
         return $this->morphOne('App\Hotel', 'iconable');
     }
 
-
-    public function featureImage()
+    //Mediacollection to hold only one file
+    public function registerMediaCollections()
     {
-        return $this->morphOne('App\Hotel', 'imageable')->where('is_main', 1);
+        $this
+            ->addMediaCollection('hotel_feature')
+            ->singleFile();
     }
 
-
-    public function images()
+    //return hotel feature image
+    public function featureImage()
     {
-        return $this->morphMany('App\Hotel', 'imageable')->where('is_main', 0);
+        return $this->getFirstMedia('hotel_feature');
+    }
+
+    //Register Media conversion
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('feature-thumb')
+              ->width(350)
+              ->height(200)
+              ->sharpen(10);
     }
 }

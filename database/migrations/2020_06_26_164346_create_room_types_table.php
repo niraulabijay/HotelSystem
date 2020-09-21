@@ -22,7 +22,6 @@ class CreateRoomTypesTable extends Migration
             $table->integer('price')->nullable()->unsigned();
             $table->unsignedBigInteger('hotel_id')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
 
             $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('restrict');

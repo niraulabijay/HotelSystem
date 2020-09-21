@@ -13,7 +13,7 @@
     <link href="{{ asset('cork/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('cork/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('cork/plugins/sweetalerts/promise-polyfill.js') }}"></script>
-    <link href="{{ asset('cork/plugins/sweetalerts/sweetalert2.min.cssplugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('cork/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('cork/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -80,7 +80,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script src="{{ asset('cork/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+    <script src="{{ asset('cork/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     @include('admin.layouts.swal')
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     @stack('scripts')

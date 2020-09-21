@@ -64,7 +64,14 @@ Route::group([
     Route::post('/brand/edit/{id}','BrandController@update')->name('brands.update');
     Route::post('/brand/delete','BrandController@delete')->name('brands.delete');
 
+    //Hotels
     Route::get('/hotels','HotelController@index')->name('hotels');
-    Route::get('/hotel/add','HotelController@add')->name('hotels.add');
+    Route::post('/hotel/add','HotelController@add')->name('hotels.add');
+    Route::get('/hotel/edit/{id}','HotelController@edit')->name('hotels.edit');
+    Route::post('/hotel/edit/{id}','HotelController@update')->name('hotels.update');
+    Route::post('/hotel/delete','HotelController@delete')->name('hotels.delete');
+
+    Route::get('/room-types','RoomTypeController@index')->name('roomType');
+    Route::get('/ajax/room-types/{}','RoomTypeController@ajaxRoomTypes')->name('ajaxRoomTypes');
 
 });

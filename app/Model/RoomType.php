@@ -1,15 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RoomType extends Model
 {
     use Sluggable;
-    use SoftDeletes;
     protected $fillable = ['title', 'slug', 'status', 'description', 'hotel_id', 'no_of_guest', 'price'];
 
     public function sluggable()

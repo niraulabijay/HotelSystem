@@ -23,7 +23,7 @@
 
 @endsection
 
-@section('contents')
+@section('content')
 
 @endsection
 

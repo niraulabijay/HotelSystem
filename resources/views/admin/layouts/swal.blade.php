@@ -5,7 +5,8 @@
             position: 'top-end',
             showConfirmButton: false,
             timer: 5000,
-            padding: '2em'
+            padding: '2em',
+            background: 'rgba(54, 226, 75, 0.75)',
         });
         toast({
             type: 'success',
@@ -20,11 +21,13 @@
             position: 'top-end',
             showConfirmButton: false,
             timer: 5000,
-            padding: '2em'
+            padding: '2em',
+
+            background: 'rgba(222, 72, 72, 0.75)',
         });
         toast({
             type: 'error',
-            title: "{{ session()->get('sweetAlert-error') }}",
+            title: "<span style='color:white;'>{{ session()->get('sweetAlert-error') }}<span>",
             padding: '2em',
         })
     </script>
