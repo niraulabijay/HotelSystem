@@ -35,31 +35,29 @@
         <div class="card component-card_1">
             <div class="card-body">
                 @if($brands->isNotEmpty())
-                    @foreach($brands as $brand)
-                        <div class="infobox-3">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="info-heading">{{ $brand->title }} &nbsp;&nbsp;@if($brand->status =="Active")<span class="badge badge-success">Active</span>@else<span class="badge badge-danger">Inactive</span> @endif</h5>
+
+                    <div class="row">
+                        @foreach($brands as $brand)
+                            <div class="col-md-6">
+                                <div class="infobox-2">
+                                    <div class="info-icon">
+                                        <img src="@if($brand->hasMedia('brand_logo')){{ asset($brand->logo()->getUrl('logo-thumb')) }} @endif" alt="">
+                                    </div>
+                                    <h5 class="info-heading">{{$brand->title}}</h5>
                                     <p class="info-text">{{ $brand->description }}</p>
-                                    {{-- <a class="info-link" href="">Discover <svg> ... </svg></a> --}}
-                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="info-link" href="#">
                                         <button type="button" class="btn btn-primary">Settings</button>
                                         <a href="{{ route('admin.brands.edit',$brand->id)}}" class="btn btn-secondary">Edit</a>
                                         <button type="button" class="btn btn-danger" data-target="#deleteContent{{$brand->id}}" data-toggle="modal">
                                             Delete
                                         </button>
                                         @include('admin.brand.delete')
-                                    </div>
+                                    </a>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="infobox-image">
-                                    <img src="@if($brand->hasMedia('brand_logo')){{ asset($brand->logo()->getUrl('logo-thumb')) }} @endif" alt="">
-                                    </div>
-                                </div>
-
+                                
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 @else
                     <div class="col-md-12">
                         <span class="badge badge-warning">No Brands Added.</span>

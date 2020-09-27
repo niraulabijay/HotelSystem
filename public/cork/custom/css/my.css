@@ -1,0 +1,65 @@
+
+.component-card_1 {
+    border: 1px solid #e0e6ed;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 4px 6px 10px -3px #bfc9d4; }
+    .component-card_1 .card-body {
+      padding: 28px 25px; }
+    .component-card_1 .icon-svg {
+      margin-bottom: 20px;
+      display: inline-block;
+      background: #3b3f5c;
+      padding: 12px;
+      border-radius: 50%;
+      color: white; }
+    .component-card_1 svg {
+      width: 20px;
+      height: 20px; }
+    .component-card_1 .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 15px; }
+    .component-card_1 .card-text {
+      color: #888ea8; }
+
+      /* pink background card */
+      .component-card_2 {
+        border: 1px solid #e0e6ed;
+        border-radius: 6px;
+        background-color: #ffe1e2;
+        box-shadow: 4px 6px 10px -3px #bfc9d4; }
+        .component-card_2 .card-body {
+          padding: 28px 25px; }
+        .component-card_2 .icon-svg {
+          margin-bottom: 20px;
+          display: inline-block;
+          background: #3b3f5c;
+          padding: 12px;
+          border-radius: 50%;
+          color: #f1f2f3; }
+        .component-card_2 svg {
+          width: 20px;
+          height: 20px; }
+        .component-card_2 .card-title {
+          font-size: 20px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          margin-bottom: 15px; }
+        .component-card_2 .card-text {
+          color: #888ea8; }
+
+
+.btn-light { border-color: transparent; }
+
+/* Room Type Page */
+.divider{
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-top: 1px solid #191e3a;
+}
+.room-type-container{
+    min-height: 350px;
+}
+/* End Room Type Page */

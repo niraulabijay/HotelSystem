@@ -42,7 +42,7 @@
                                     <div class="infobox-image">
                                         <img src="@if($hotel->hasMedia('hotel_feature')){{ asset($hotel->featureImage()->getUrl('feature-thumb')) }} @endif" alt="">
                                     </div>
-                                    <p class="info-text">{{ $hotel->description }}</p>
+                                    <p class="info-text"><i data-feather="map-pin"></i>&nbsp;{{ $hotel->location }}</p>
                                     {{-- <a class="info-link" href="">Discover <svg> ... </svg></a> --}}
 
                                 </div>
@@ -130,8 +130,8 @@
                         @enderror
                     </div>
                     <div class="form-group mb-4">
-                        <label class="control-label">Quick Description:</label>
-                        <textarea class="form-control" rows="3" name="description" aria-label="With textarea" placeholder="Short Description About the Hotel">{{ isset($editHotel)? $editHotel->description : '' }}</textarea>
+                        <label class="control-label">Hotel Location: (For HomePage Search)</label>
+                        <textarea class="form-control" rows="2" name="location" aria-label="With textarea" placeholder="Location of hotel. Used in search-bar.">{{ isset($editHotel)? $editHotel->location : '' }}</textarea>
                     </div>
 
                     <div class="form-group mb-4 ">

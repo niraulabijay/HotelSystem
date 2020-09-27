@@ -71,7 +71,9 @@ Route::group([
     Route::post('/hotel/edit/{id}','HotelController@update')->name('hotels.update');
     Route::post('/hotel/delete','HotelController@delete')->name('hotels.delete');
 
+    //Room Types
     Route::get('/room-types','RoomTypeController@index')->name('roomType');
-    Route::get('/ajax/room-types/{}','RoomTypeController@ajaxRoomTypes')->name('ajaxRoomTypes');
+    Route::get('/room-type/add/{hotel_slug}','RoomTypeController@add')->name('roomType.add');
+    Route::post('/room-type/add','RoomTypeController@store')->name('roomType.store');
 
 });

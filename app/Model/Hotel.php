@@ -13,7 +13,7 @@ class Hotel extends Model implements HasMedia
     use HasMediaTrait;
     use Sluggable;
 
-    protected $fillable = ['title', 'slug', 'brand_id', 'status', 'description'];
+    protected $fillable = ['title', 'slug', 'brand_id', 'status', 'location'];
 
     public function sluggable()
     {

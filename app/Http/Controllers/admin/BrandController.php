@@ -11,14 +11,13 @@ use Brian2694\Toastr\Facades\Toastr;
 class BrandController extends Controller
 {
     public function index(){
-        tableList::getTableList('brand_id');
         $brands = Brand::all();
         return view('admin.brand.index',compact('brands'));
     }
 
     public function add(Request $request){
         $request->validate([
-           'title' => 'required|unique:brands,title,NULL,id,deleted_at,NULL',
+           'title' => 'required|unique:brands,title',
             'logo' => 'required|mimes:jpeg,bmp,png',
         ]);
         $brand = new Brand();
@@ -47,7 +46,7 @@ class BrandController extends Controller
 
     public function update(Request $request, $id){
         $request->validate([
-            'title' => 'required|unique:brands,title,'.$request->id.',id,deleted_at,NULL',
+            'title' => 'required|unique:brands,title,'.$request->id.',id',
             'logo' => 'mimes:jpeg,bmp,png',
         ]);
         try{

@@ -15,7 +15,8 @@
     <script src="{{ asset('cork/plugins/sweetalerts/promise-polyfill.js') }}"></script>
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <link href="{{ asset('cork/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" type="text/css" href="{{asset('cork/assets/css/elements/alert.css')}}">
+    <link href="{{asset('cork/custom/css/my.css')}}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     @stack('styles')
@@ -77,6 +78,14 @@
         });
     </script>
     <script src="{{ asset('cork/assets/js/custom.js')}}"></script>
+
+    <!-- Feather icons -->
+    <script src="{{asset('cork/plugins/font-icons/feather/feather.min.js')}}"></script>
+    <script type="text/javascript">
+        feather.replace();
+    </script>
+
+    <!-- Toastr Alert -->
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
 

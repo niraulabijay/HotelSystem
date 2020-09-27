@@ -2,6 +2,11 @@
 
 @push('styles')
 
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link href="{{asset('cork/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('cork/assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('cork/custom/css/infobox.css') }}" rel="stylesheet" type="text/css" />
+
 @endpush
 
 @section('header')
@@ -24,32 +29,62 @@
 
 @section('content')
 
-    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="card component-card_1">
-            <div class="card-body">
-                <h4 class="media-heading">Hotels:</h4>
-                <ul class="hotel-list">
-                    @foreach($hotels as $hotel)
-                        <li>
-                        <button class="hotel-item" id="{{ $hotel->id }}">{{ $hotel->title }}</button>
-                        </li>
-                    @endforeach
-                </ul>
+    <div class="col-12 layout-spacing">
+        <div class="row mb-4 mt-3">
+            <div class="col-sm-3 col-12" style="border-right:1px solid;">
+                <div class="statbox widget box box-shadow p-3">
+                    <h4 class="text-center mb-3">Hotel List</h4>
+                    <div class="nav flex-column nav-pills mb-sm-0 mb-3" id="rounded-vertical-pills-tab" role="tablist" aria-orientation="vertical">
+                        @foreach($hotels as $hotel)
+                            <a class="nav-link mb-2 {{ $loop->iteration == 1 ? "active" : ""}} mx-auto"
+                                id="rounded-vertical-pills-hotel-tab-" data-toggle="pill" href="#rounded-vertical-pills-{{$hotel->id}}"
+                                role="tab" aria-controls="rounded-vertical-pills-home" aria-selected="true">
+                                {{$hotel->title}}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="card component-card_1">
-            <div class="card-body">
-                <div class="romm-types-container">
+            <div class="col-sm-9 col-12">
+                <div class="statbox widget box box-shadow p-3 room-type-container">
+                    <div class="tab-content" id="rounded-vertical-pills-tabContent">
+                        @foreach($hotels as $hotel)
+                            <div class="tab-pane fade {{ $loop->iteration == 1 ? "show active" : ""}}" id="rounded-vertical-pills-{{$hotel->id}}" role="tabpanel" aria-labelledby="rounded-vertical-pills-home-tab">
+                                <h3 class="mb-4">
+                                    {{$hotel->title}} - Room Types&nbsp;<i data-feather="home"></i>
+                                    <a href="{{ route('admin.roomType.add',$hotel->slug) }}" class="btn btn-success btn-md float-right">Add New</a>
+                                </h3>
+                                <span><strong>The room type includes information as to the number of beds, price and more. One or more units can be added for each room type.</strong></span>
+                                <hr class="divider">
 
+                                @if($hotel->roomTypes->count() > 0)
+                                    @foreach($hotel->roomTypes as $roomType)
+                                        <div class="card component-card_1">
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    titleT
+                                                </div>
+                                                <div class="card-text">
+                                                    check
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="alert alert-light-warning mb-4" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+                                        <strong>Empty!</strong> No room types have been created for this hotel.
+                                    </div>
+                                @endif
+
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 
 @endsection
 
@@ -59,8 +94,7 @@
         $(document).ready(function(){
             var id = parseInt($('.hotel-item').get(0).id);
             console.log(id);
-            var tempDeleteUrl = "{{ route('admin.ajaxRoomTypes', ':id') }}";
-            tempDeleteUrl = tempDeleteUrl.replace(':id', id);
+            var tempDeleteUrl = "";
 
             $.ajaxSetup({
                 headers: {
@@ -76,10 +110,6 @@
                 },
                 success: function (data) {
 
-                    if(data.status == 'success'){
-
-                        $('#edu-data-table').DataTable().ajax.reload();
-                    }
                 },
                 error: function (err) {
                     if (err.status == 422) {

@@ -7,6 +7,7 @@ use App\Model\Hotel;
 use App\Http\Controllers\Controller;
 use App\tableList;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class HotelController extends Controller
 {
@@ -19,45 +20,16 @@ class HotelController extends Controller
     public function add(Request $request){
         // dd($request);
         $request->validate([
-            'title' => 'required|unique:hotels,title,NULL,id,deleted_at,NULL',
+            'title' => 'required|unique:hotels,title',
             'brand' => 'required',
             'feature' => 'required|mimes:jpeg,bmp,png',
-        ]);
-        $hotel = new Hotel();
-        $hotel->title = $request->title;
-        $hotel->brand_id = $request->brand;
-        $hotel->description = $request->description;
-        if($request->status){
-            $hotel->status = "Active";
-        }else{
-            $hotel->status = "Inactive";
-        }
-        $hotel->save();
-        if($request->hasFile('feature')){
-            $hotel->addMediaFromRequest('feature')
-                ->toMediaCollection('hotel_feature');
-        }
-        return redirect()->back()->with('sweetAlert-success','New Hotel Added Successfully');
-    }
-
-    public function edit($id){
-        $hotels = Hotel::all();
-        $brands = Brand::all();
-        $editHotel = Hotel::findOrFail($id);
-        return view('admin.hotel.index',compact('hotels','editHotel','brands'));
-    }
-
-    public function update(Request $request, $id){
-        $request->validate([
-            'title' => 'required|unique:hotels,title,'.$request->id.',id,deleted_at,NULL',
-            'brand' => 'required',
-            'feature' => 'mimes:jpeg,bmp,png',
+            'location' => 'required',
         ]);
         try{
-            $hotel = Hotel::find($request->id);
+            $hotel = new Hotel();
             $hotel->title = $request->title;
             $hotel->brand_id = $request->brand;
-            $hotel->description = $request->description;
+            $hotel->location = $request->location;
             if($request->status){
                 $hotel->status = "Active";
             }else{
@@ -69,7 +41,45 @@ class HotelController extends Controller
                     ->toMediaCollection('hotel_feature');
             }
         }catch(\Exception $e){
-            return redirect()->back()->with('sweetAlert-error',$e->getMessage());
+            Toastr::error($e->getMessage(), 'Server Error');
+            return redirect()->back();
+        }
+        Toastr::success('New Hotel Added Successfully','Operation Success');
+        return redirect()->back();
+    }
+
+    public function edit($id){
+        $hotels = Hotel::all();
+        $brands = Brand::all();
+        $editHotel = Hotel::findOrFail($id);
+        return view('admin.hotel.index',compact('hotels','editHotel','brands'));
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'title' => 'required|unique:hotels,title,'.$request->id.',id',
+            'brand' => 'required',
+            'feature' => 'mimes:jpeg,bmp,png',
+            'location' => 'required'
+        ]);
+        try{
+            $hotel = Hotel::find($request->id);
+            $hotel->title = $request->title;
+            $hotel->brand_id = $request->brand;
+            $hotel->location = $request->location;
+            if($request->status){
+                $hotel->status = "Active";
+            }else{
+                $hotel->status = "Inactive";
+            }
+            $hotel->save();
+            if($request->hasFile('feature')){
+                $hotel->addMediaFromRequest('feature')
+                    ->toMediaCollection('hotel_feature');
+            }
+        }catch(\Exception $e){
+            Toastr::error($e->getMessage(), 'Server Error');
+            return redirect()->back();
         }
         return redirect()->route('admin.hotels')->with('sweetAlert-success','Hotel Updated Successfully');
     }
@@ -87,18 +97,20 @@ class HotelController extends Controller
             }
             $delete_query = $hotel->delete();
             if ($delete_query) {
-                return redirect()->back()->with('sweetAlert-success', 'Hotel has been deleted successfully');
+                Toastr::success('Hotel has been deleted successfully', 'Operation Success');
+                return redirect()->back();
             } else {
-                return redirect()->back()->with('sweetAlert-error', 'Something went wrong, please try again');
+                Toastr::error('Something went wrong.', 'Failed to Delete');
+                return redirect()->back();
             }
 
         } catch (\Illuminate\Database\QueryException $e) {
-            dd($e->getMessage());
             $msg = 'This data already used in  : ' . $tables . ' Please remove those data first';
-            return redirect()->back()->with('sweetAlert-error', $msg);
+            Toastr::error($msg, 'Operation Failed');
+            return redirect()->back();
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            return redirect()->back()->with('sweetAlert-error', 'Something went wrong, please try again');
+            Toastr::error($e->getMessage(), 'Server Error');
+            return redirect()->back();
         }
 
     }
