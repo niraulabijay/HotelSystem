@@ -74,6 +74,30 @@ Route::group([
     //Room Types
     Route::get('/room-types','RoomTypeController@index')->name('roomType');
     Route::get('/room-type/add/{hotel_slug}','RoomTypeController@add')->name('roomType.add');
-    Route::post('/room-type/add','RoomTypeController@store')->name('roomType.store');
+    Route::post('/room-type/add/{hotel_slug}','RoomTypeController@store')->name('roomType.store');
+    Route::get('/room-type/edit/{roomTypeSlug}','RoomTypeController@edit')->name('roomType.edit');
+    Route::post('/room-type/edit/{roomTypeSlug}','RoomTypeController@update')->name('roomType.update');
+    Route::post('/room-type/delete','RoomTypeController@delete')->name('roomType.delete');
+    // Room Routes
+    Route::post('/room/add/','RoomController@store')->name('room.add');
+    Route::get('room/edit/','RoomController@edit')->name('room.edit');
+    Route::post('room/update','RoomController@update')->name('room.update');
+    Route::post('room/delete','RoomController@delete')->name('room.delete');
 
+    //Faq Category
+    Route::get('/faqs','FaqController@index')->name('faqs');
+    Route::post('/faqs','FaqController@storeCategory')->name('faqCategory.store');
+    Route::get('/faq-category/{slug}/edit','FaqController@editCategory')->name('faqCategory.edit');
+    Route::post('/faq-category/{slug}/edit','FaqController@updateCategory')->name('faqCategory.update');
+    Route::post('/faq-category/delete','FaqController@deleteCategory')->name('faqCategory.delete');
+    // Faq Question
+    Route::post('/faq-question/add','FaqController@storeQuestion')->name('faq.store');
+    Route::get('/faq-question/edit','FaqController@editQuestion')->name('faq.edit');
+    Route::post('/faq-question/update','FaqController@updateQuestion')->name('faq.update');
+    Route::post('/faq-question/delete','FaqController@deleteQuestion')->name('faq.delete');
+
+    //Booking
+    Route::get('/booking/new','BookingController@new')->name('booking.new');
+    Route::post('/booking/checkAvailable','BookingController@checkAvailable')->name('booking.checkAvailable');
+    Route::post('/booking/proceed','BookingController@proceedBooking')->name('booking.proceedBooking');
 });

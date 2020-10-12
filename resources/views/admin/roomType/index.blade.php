@@ -60,13 +60,63 @@
 
                                 @if($hotel->roomTypes->count() > 0)
                                     @foreach($hotel->roomTypes as $roomType)
-                                        <div class="card component-card_1">
+                                        <div class="card component-card_1 mb-3">
                                             <div class="card-body">
-                                                <div class="card-title">
-                                                    titleT
-                                                </div>
-                                                <div class="card-text">
-                                                    check
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="card-title">
+                                                            {{$roomType->title}}
+                                                            <a href="{{ route('admin.roomType.edit',$roomType->slug)}}" class="editFaq btn btn-warning rounded-circle">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <button data-id="{{$roomType->id}}" data-toggle="modal" data-target="#deleteRoomType" class="deleteRoomButton btn btn-danger  rounded-circle">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div>
+                                                            <img src="{{$roomType->featureImage()->getUrl('thumbnail') }}" style="height: 150px; width:auto;" alt="Room Type Feature Image">
+                                                        </div>
+                                                        <div class="card-text">
+                                                            {{$roomType->description}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <div class="alert alert-light-warning mb-4" role="alert" style="min-height: 200px">
+                                                            <div class="card-title">
+                                                                Room Type Details
+                                                            </div>
+                                                            <div class="card-text mb-2">
+                                                                <p>
+                                                                    <strong>No. of guests : </strong> <span>{{$roomType->no_of_adult}}</span>
+                                                                    &nbsp;|&nbsp;<strong>Base Price : </strong> <span>$&nbsp;{{$roomType->base_price_format()}}</span></p>
+                                                                </p>
+
+                                                            </div>
+                                                            <div class="card-title">
+                                                                Units of this type ({{$roomType->rooms->count() ?? 0 }}):
+                                                            </div>
+                                                            <div class="card-text">
+                                                                @if($roomType->rooms->count() > 0)
+                                                                    @foreach ($roomType->rooms as $room)
+                                                                        <button class="btn text-light {{$room->status == 'Active' ? 'btn-dark text-light' : 'btn-light text-dark'  }} ">
+                                                                            <span class="editRoomUnit" data-id="{{$room->id}}">
+                                                                                {{$room->title}}
+                                                                            </span>
+                                                                            <span class="badge badge-danger counter deleteRoomUnitButton" data-toggle="modal" data-target="#deleteRoomModal" data-id="{{$room->id}}">
+                                                                                X
+                                                                            </span>
+                                                                        </button>
+                                                                    @endforeach
+                                                                @else
+                                                                    <span class="text text-dark">No. Rooms Added.</span>
+                                                                @endif
+                                                                <button data-toggle="modal" data-target="#addRoomUnit" data-id="{{$roomType->id}}" data-title="{{$roomType->title}}" class="addRoomUnitButton btn btn-outline-primary">
+                                                                    <i class="fa fa-key"></i>&nbsp; Add a room
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,6 +130,18 @@
 
                             </div>
                         @endforeach
+
+                        @include('admin.roomType.delete')
+                        @include('admin.roomType.rooms.add')
+                        <!-- Edit Room Unit Modal -->
+                        <div class="modal fade" id="roomEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog edit-room-modal-content" role="document">
+                                <!-- Ajax Data (Edit Room Form) Loaded Here -->
+                            </div>
+                        </div>
+                        <!-- Edit Room Unit Modal Ends -->
+                        @include('admin.roomType.rooms.delete')
+
                     </div>
                 </div>
             </div>
@@ -91,6 +153,51 @@
 @push('scripts')
 
     <script>
+        $('.deleteRoomButton').on('click',function(){
+            $('#deleteRoomTypeId').val($(this).attr('data-id'));
+        });
+    </script>
+
+    <script>
+        $('.addRoomUnitButton').on('click',function(){
+            console.log($(this).attr('data-id'));
+            $('#addRoomUnitId').val($(this).attr('data-id'));
+            $('#addRoomUnitTitle').html($(this).attr('data-title'));
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.editRoomUnit').click(function(){
+                var id = $(this).attr('data-id');
+                // AJAX request
+                $.ajax({
+                    url: '{{route("admin.room.edit")}}',
+                    type: 'get',
+                    data: {room_id: id},
+                    success: function(response){
+                        // Add response in Modal body
+                        $('.edit-room-modal-content').html(response);
+
+                        // Display Modal
+                        $('#roomEditModal').modal('show');
+                    },
+                    error: function(data){
+                        toastr.error(data.responseText,'Server Error');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $('.deleteRoomUnitButton').on('click',function(){
+            console.log('click');
+            $('#deleteRoomUnitId').val($(this).attr('data-id'));
+        })
+    </script>
+
+    {{-- <script>
         $(document).ready(function(){
             var id = parseInt($('.hotel-item').get(0).id);
             console.log(id);
@@ -121,6 +228,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
+
 
 @endpush

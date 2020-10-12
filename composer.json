@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.2",
         "sentry/sentry-laravel": "1.8.0",
-        "spatie/laravel-medialibrary": "7.19.3"
+        "spatie/laravel-medialibrary": "7.19.3",
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

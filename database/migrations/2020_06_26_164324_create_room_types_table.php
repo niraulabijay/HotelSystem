@@ -14,15 +14,17 @@ class CreateRoomTypesTable extends Migration
     public function up()
     {
         Schema::create('room_types', function (Blueprint $table) {
-            $table->id(); $table->string('title')->nullable();
+            $table->id();
+            $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->longText('description')->nullable();
-            $table->integer('no_of_guest')->nullable()->unsigned();
-            $table->integer('price')->nullable()->unsigned();
+            $table->integer('no_of_adult')->nullable()->unsigned();
+            $table->integer('no_of_child')->nullable()->unsigned();
+            $table->integer('base_price')->nullable()->unsigned();
             $table->unsignedBigInteger('hotel_id')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
 
             $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('restrict');
         });

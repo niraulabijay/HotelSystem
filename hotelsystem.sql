@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2020 at 07:56 PM
+-- Generation Time: Sep 27, 2020 at 06:58 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -43,8 +43,7 @@ CREATE TABLE `activations` (
 --
 
 INSERT INTO `activations` (`id`, `user_id`, `code`, `completed`, `completed_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'YO7XzrwLHbjqy3UJD7bsintSlDDYZQfm', 1, '2020-09-21 03:58:00', '2020-09-21 03:58:00', '2020-09-21 03:58:00'),
-(2, 1, 'I61sqLmmH36dOLcR5G2HtVfyChjVtJ8G', 0, NULL, '2020-09-21 03:58:00', '2020-09-21 03:58:00');
+(1, 1, 'YO7XzrwLHbjqy3UJD7bsintSlDDYZQfm', 1, '2020-09-21 03:58:00', '2020-09-21 03:58:00', '2020-09-21 03:58:00');
 
 -- --------------------------------------------------------
 
@@ -97,7 +96,8 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `title`, `slug`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(2, 'Aga', 'aga', 'Active', 'No. 1 brand in USA', '2020-09-21 10:01:39', '2020-09-21 10:01:39');
+(2, 'Aga', 'aga', 'Active', 'No. 1 brand in USA', '2020-09-21 10:01:39', '2020-09-21 10:01:39'),
+(3, 'Earth Inn', 'earth-inn', 'Active', 'Highest quality @ lowest prices', '2020-09-25 02:31:07', '2020-09-25 02:31:07');
 
 -- --------------------------------------------------------
 
@@ -132,6 +132,37 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `question` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `answer` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `faq_category_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faq_categories`
+--
+
+CREATE TABLE `faq_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotels`
 --
 
@@ -141,7 +172,7 @@ CREATE TABLE `hotels` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `brand_id` bigint(20) UNSIGNED DEFAULT NULL,
   `status` enum('Active','Inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Active',
-  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -150,8 +181,8 @@ CREATE TABLE `hotels` (
 -- Dumping data for table `hotels`
 --
 
-INSERT INTO `hotels` (`id`, `title`, `slug`, `brand_id`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Sunshine Hotel', 'sunshine-hotel', 2, 'Active', 'Special hotel', '2020-09-21 10:03:35', '2020-09-21 10:03:35');
+INSERT INTO `hotels` (`id`, `title`, `slug`, `brand_id`, `status`, `location`, `created_at`, `updated_at`) VALUES
+(1, 'Sunshine Hotel', 'sunshine-hotel', 2, 'Active', 'Colorado, Boulder, USA', '2020-09-21 10:03:35', '2020-09-24 17:58:48');
 
 -- --------------------------------------------------------
 
@@ -281,7 +312,8 @@ CREATE TABLE `media` (
 
 INSERT INTO `media` (`id`, `model_type`, `model_id`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `size`, `manipulations`, `custom_properties`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES
 (3, 'App\\Model\\Brand', 2, 'brand_logo', '3a', '3a.png', 'image/png', 'media_path', 1738, '[]', '{\"generated_conversions\":{\"logo-thumb\":true}}', '[]', 2, '2020-09-21 10:02:14', '2020-09-21 10:02:15'),
-(5, 'App\\Model\\Hotel', 1, 'hotel_feature', '7e8cdbfe9033a6cc8d71ec89435f6034', '7e8cdbfe9033a6cc8d71ec89435f6034.jpg', 'image/jpeg', 'media_path', 63832, '[]', '{\"generated_conversions\":{\"feature-thumb\":true}}', '[]', 4, '2020-09-21 10:03:57', '2020-09-21 10:03:57');
+(5, 'App\\Model\\Hotel', 1, 'hotel_feature', '7e8cdbfe9033a6cc8d71ec89435f6034', '7e8cdbfe9033a6cc8d71ec89435f6034.jpg', 'image/jpeg', 'media_path', 63832, '[]', '{\"generated_conversions\":{\"feature-thumb\":true}}', '[]', 4, '2020-09-21 10:03:57', '2020-09-21 10:03:57'),
+(6, 'App\\Model\\Brand', 3, 'brand_logo', '120-1201733_royalty-free-phoenix-logo-hd-png-download', '120-1201733_royalty-free-phoenix-logo-hd-png-download.png', 'image/png', 'media_path', 82106, '[]', '{\"generated_conversions\":{\"logo-thumb\":true}}', '[]', 5, '2020-09-25 02:31:08', '2020-09-25 02:31:14');
 
 -- --------------------------------------------------------
 
@@ -316,7 +348,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2020_06_26_175023_create_icons_table', 1),
 (15, '2020_06_26_180147_create_iconables_table', 1),
 (16, '2020_06_26_180203_create_imageables_table', 1),
-(17, '2020_06_28_174520_create_media_table', 1);
+(17, '2020_06_28_174520_create_media_table', 1),
+(18, '2020_09_27_162733_create_faq_categories_table', 2),
+(19, '2020_09_27_162819_create_faqs_table', 2);
 
 -- --------------------------------------------------------
 
@@ -338,7 +372,11 @@ CREATE TABLE `persistences` (
 
 INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`) VALUES
 (1, 1, 'H3RYGr86alciNXSx1cQNXTzNFcgvM2Yh', '2020-09-21 03:58:20', '2020-09-21 03:58:20'),
-(2, 1, 'QW2PtAaWX3mn43rVJx953rplgEMhv3Em', '2020-09-21 09:34:24', '2020-09-21 09:34:24');
+(2, 1, 'QW2PtAaWX3mn43rVJx953rplgEMhv3Em', '2020-09-21 09:34:24', '2020-09-21 09:34:24'),
+(3, 1, 'F1UTL9LrYQjlj8wPx50KD0kMaUqq9783', '2020-09-24 17:58:15', '2020-09-24 17:58:15'),
+(4, 1, 'Z91ESxPgwF3aLYOo2OQ9VQoZloHfxAnu', '2020-09-25 01:27:07', '2020-09-25 01:27:07'),
+(5, 1, 'XCo2u0aF6p5F6Pg1d5vmygLmn1h5RTre', '2020-09-25 08:51:08', '2020-09-25 08:51:08'),
+(6, 1, 'bvzAtFEk5GKcPxgog35ywFy0fXMrtcHt', '2020-09-27 10:15:21', '2020-09-27 10:15:21');
 
 -- --------------------------------------------------------
 
@@ -446,7 +484,7 @@ CREATE TABLE `system_users` (
 --
 
 INSERT INTO `system_users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin@gmail.com', '$2y$10$JXIjl7b1RbCJ71vvHiatfuTT73ZufRYNjBAccFTIFjyRedYNrxEMG', NULL, '2020-09-21 09:34:24', NULL, NULL, NULL, NULL, 1, '2020-09-21 03:58:00', '2020-09-21 09:34:24');
+(1, 'admin@gmail.com', '$2y$10$JXIjl7b1RbCJ71vvHiatfuTT73ZufRYNjBAccFTIFjyRedYNrxEMG', NULL, '2020-09-27 10:15:21', NULL, NULL, NULL, NULL, 1, '2020-09-21 03:58:00', '2020-09-27 10:15:21');
 
 -- --------------------------------------------------------
 
@@ -521,6 +559,18 @@ ALTER TABLE `brand_settings`
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faqs`
+--
+ALTER TABLE `faqs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `faq_categories`
+--
+ALTER TABLE `faq_categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -662,7 +712,7 @@ ALTER TABLE `amenity_room_type`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `brand_settings`
@@ -674,6 +724,18 @@ ALTER TABLE `brand_settings`
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `faqs`
+--
+ALTER TABLE `faqs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `faq_categories`
+--
+ALTER TABLE `faq_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -728,13 +790,13 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `persistences`
 --
 ALTER TABLE `persistences`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reminders`

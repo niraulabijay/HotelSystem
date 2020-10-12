@@ -90,11 +90,6 @@ class HotelController extends Controller
         $tables = tableList::getTableList($id_key);
         $hotel = Hotel::find($request->hotel_id);
         try {
-            if($hotel->hasMedia('hotel_feature')){
-                foreach($hotel->getMedia('hotel_feature') as $media){
-                    $delete = $hotel->deleteMedia($media);
-                }
-            }
             $delete_query = $hotel->delete();
             if ($delete_query) {
                 Toastr::success('Hotel has been deleted successfully', 'Operation Success');

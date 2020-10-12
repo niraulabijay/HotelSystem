@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template </title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
     <link href="{{ asset('cork/assets/css/loader.css') }}" rel="stylesheet" type="text/css" />
@@ -14,11 +15,15 @@
     <link href="{{ asset('cork/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('cork/plugins/sweetalerts/promise-polyfill.js') }}"></script>
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    <link href="{{ asset('cork/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{asset('cork/assets/css/elements/alert.css')}}">
     <link href="{{asset('cork/custom/css/my.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- END GLOBAL MANDATORY STYLES -->
-
+    <style>
+        .form-control{
+            font-weight: 500;
+        }
+    </style>
     @stack('styles')
 
 </head>

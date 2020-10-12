@@ -339,13 +339,10 @@
                         <a href="{{ route('admin.brands') }}">Brand</a>
                     </li>
                     <li class="sub-sub-submenu-list">
-                        <a href="#starter-kit" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Starter Kit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
+                        <a href="#starter-kit" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Site Settings <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
                         <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" id="starter-kit" data-parent="#more">
                             <li>
-                                <a href="starter_kit_blank_page.html"> Blank Page </a>
-                            </li>
-                            <li>
-                                <a href="starter_kit_breadcrumb.html"> Breadcrumb </a>
+                                <a href="{{ route('admin.faqs') }}"> Faqs </a>
                             </li>
                         </ul>
                     </li>
